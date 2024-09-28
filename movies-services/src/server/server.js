@@ -1,36 +1,32 @@
 require('express-async-errors')
-const hemelt = require('helmet');
-const logger = require('morgan');
+const morgan = require('morgan');
 const express = require('express');
 const database = require('../config/database');
-const log = require('../config/logger');
+const logger = require('../config/logger');
 
 let server = null;
 
 async function start(api, repository)
 {
     const app = express();
-    app.use(logger('dev'));
-    //proteção contra roubo e acesso ao dados pelo cabeçalho
-    app.use(hemelt());
-    app.use(express.json());
+    app.use(morgan('dev'));
+    app.use(express.json()); //feito direto no api-gateway
 
     //Boa prática ter uma rota GET para um check quanto ao funcionamento do servidor
     app.get('/health', (req, res) => res.send(`The service ${process.env.MS_NAME} is runing at ! ${process.env.PORT}`))
 
-    api(app, repository);
-//movies(app, repository)
+    api(app, repository); //movies(app, repository)
 
     //page of error
     app.use((error, req, res, next) =>
     {
         // console.error(error);
-        log.error(error.stack)
+        logger.error(error.stack)
         res.sendStatus(500);
     });
 
     await database.connect();
-    server = app.listen(process.env.PORT, () => { console.log(`The service ${process.env.MS_NAME} already started at ${process.env.PORT}`)} )
+    server = app.listen(process.env.PORT, () => { console.log(`The service ${process.env.MS_NAME} started at port: ${process.env.PORT}`)} )
     return server
 }
 

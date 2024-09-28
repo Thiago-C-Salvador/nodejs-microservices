@@ -1,0 +1,29 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "navegation  controler in just a address",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config ./server/index.js",
+    "dev": "nodemon -r dotenv/config ./server/index.js",
+    "test": "jest"
+  },
+  "author": "Thiago Candido Salvador",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parse": "^0.4.0",
+    "dotenv-safe": "^9.1.0",
+    "express": "^4.21.0",
+    "express-http-proxy": "^2.1.1",
+    "helmet": "^7.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.9.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}

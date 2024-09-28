@@ -17,7 +17,7 @@ async function getMovieById(id)
 async function getMoviePrimieres()
 {
     const monthAgo = new Date();
-    monthAgo.setMonth(-1);
+    monthAgo.setMonth( monthAgo.getMonth()-1 );
     const db = await database.connect();
     return db.collection('movies').find({dataLancamento: { $gte: monthAgo } }).toArray();
 }
