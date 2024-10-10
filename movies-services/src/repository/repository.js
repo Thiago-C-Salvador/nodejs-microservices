@@ -25,17 +25,30 @@ async function getMoviePrimieres()
 async function addMovie(dataMovie)
 {
     const db = await database.connect();
-    const response = await db.collection('movies').insertOne({dataMovie});
+    const response = await db.collection('movies').insertOne(dataMovie);
     dataMovie._id = response.insertedId;
     return dataMovie;
 }
 
-async function deleteMovie(movieId)
+async function updateMovie(idMovie, dataUpdate)
 {
+    const movieId = new ObjectId(idMovie);
     const db = await database.connect();
-    return await db.collection('movies').deleteOne({_id: new ObjectId(movieId)});
-    // if(teste.deletedCount === 0) return -1
-    // return
+
+    const existingMovie = await db.collection('movies').findOne({ _id: movieId });
+    if(!existingMovie) return -1
+
+    const response = await db.collection('movies').updateOne( {_id: movieId }, {$set: dataUpdate});
+    return response;
+}
+
+async function deleteMovie(idMovie)
+{
+    const movieId = new ObjectId(idMovie);
+    const db = await database.connect();
+    const response = await db.collection('movies').deleteOne({_id: movieId });
+    if(response.deletedCount === 0) return -1
+    return
 }
  
-module.exports = { getAllMovies, getMovieById, getMoviePrimieres, addMovie, deleteMovie }
+module.exports = { getAllMovies, getMovieById, getMoviePrimieres, addMovie, deleteMovie, updateMovie }

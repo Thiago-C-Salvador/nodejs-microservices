@@ -10,7 +10,7 @@ async function start(api, repository)
 {
     const app = express();
     app.use(morgan('dev'));
-    app.use(express.json()); //feito direto no api-gateway
+    app.use(express.json());
 
     //Boa prática ter uma rota GET para um check quanto ao funcionamento do servidor
     app.get('/health', (req, res) => res.send(`The service ${process.env.MS_NAME} is runing at ! ${process.env.PORT}`))

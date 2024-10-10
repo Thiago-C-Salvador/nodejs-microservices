@@ -22,13 +22,13 @@ jest.mock('../node_modules/jsonwebtoken', () =>{
 let app = null;
 beforeAll(async() =>{
    app =  await server.start(movies, repositoryMock);
-})
+});
 
 afterAll(async() =>
 {
     await db.disconnect();
     await server.stop();
-})
+});
 
 test('GET /movies 200 OK tokenAdmin', async () =>
 {
@@ -85,9 +85,6 @@ test('GET /movies/:id 401 UNAUTHORIZED (no-existe token)', async () =>
     expect(response.status).toEqual(401);
 });
 
-
-
-//fora o teste do movieById, não faz sentido testar as outras rota, pois no máximo que será rtornado vai ser um array vazio uma vez, que pode ter ou não filme cadastrados que satisfaça a condição da rota "/movies/primieres" e "/movies"
 test('GET /movies/:id 404 NOT FOUND', async () =>
 {
     const response = await request(app).get('/movies/-1').set('authorization', `Bearer ${tokenAdmin}`);
@@ -200,33 +197,103 @@ test('POST /movies/ 422 ', async () =>
         categorias: ["Aventura", "Drama"]
     }
 
-    const response = await request(app).post('/movies').send(movie).set("Content-Type", "application/json").set('authorization', `Bearer ${tokenAdmin}`)
+    const response = await request(app).post('/movies').send(movie).set("Content-Type", "application/json").set('authorization', `Bearer ${tokenAdmin}`);
     expect(response.body).toBeTruthy();
     expect(response.status).toEqual(422);
 });
 
+test("PATCH /movies/:id 200 OK", async () =>{
+
+    const updateMovie = {
+        titulo: "Filme teste 1",
+        sinopse: "Um filme teste para o jest teste",
+        duracao: 120,
+    }
+    const res = await request(app).patch('/movies/66c48f6cbdba192f1ecdcdf8').set('Content-Type', 'application/json').set('authorization', `Bearer ${tokenAdmin}`).send(updateMovie);
+    expect(res.status).toEqual(200);
+});
+
+test('PATCH /movies/:id 403 FORBIDDEN', async () => 
+{
+    const updateMovie = {
+        titulo: "Filme teste 1",
+        sinopse: "Um filme teste para o jest teste",
+        duracao: 120,
+    }
+
+    const response = await request(app).patch('/movies/66c48f6cbdba192f1ecdcdf8').set("Content-Type", "application/json").set('authorization', `Bearer ${tokenGuest}`).send(updateMovie);
+    expect(response.status).toEqual(403);
+});
+    
+test('PATCH /movies/:id 401 UNAUTHORIZED (INVALID TOKEN)', async () => 
+{
+    const updateMovie = {
+        titulo: "Filme teste 1",
+        sinopse: "Um filme teste para o jest teste",
+        duracao: 120,
+    }
+    const response = await request(app).patch('/movies/66c48f6cbdba192f1ecdcdf8').set("Content-Type", "application/json").set('authorization', `Bearer 123`).send(updateMovie);
+    expect(response.status).toEqual(401);
+});
+
+test('PATCH /movies/:id 401 UNAUTHORIZED (WITHOUT TOKEN)', async () => 
+{
+    const updateMovie = {
+        titulo: "Filme teste 1",
+        sinopse: "Um filme teste para o jest teste",
+        duracao: 120,
+    }
+
+    const response = await request(app).patch('/movies/66c48f6cbdba192f1ecdcdf8').set("Content-Type", "application/json").send(updateMovie);
+    expect(response.status).toEqual(401);
+});
+   
+test('PATCH /movies/:id 422 ', async () => 
+{
+    const updateMovie = {
+        titulos: "Filme teste 1",//ponto de inconsistência dos dados
+        sinopse: "Um filme teste para o jest teste",
+        duracao: 120,
+    }
+
+    const response = await request(app).patch('/movies/66c48f6cbdba192f1ecdcdf8').set("Content-Type", "application/json").set('authorization', `Bearer ${tokenAdmin}`).send(updateMovie);
+    expect(response.status).toEqual(422);
+});
+
+test('PATCH /movies/:id 404 NOT FOUND', async () => 
+{
+    const response = await request(app).patch('/movies/-1').set("Content-Type", "application/json").set('authorization', `Bearer ${tokenAdmin}`);
+    expect(response.status).toEqual(404);
+});
 
 test("DELETE /delete_movies/:id 204", async () =>
 {
     const response = await request(app).delete('/movies/66f4e3f9da7b9694af3411cd').set('authorization', `Bearer ${tokenAdmin}`);
     expect(response.status).toEqual(204);
-})
+});
 
 test("DELETE /delete_movies/:id 403 FORBIDDEN", async () =>
 {
     const response = await request(app).delete('/movies/66f4e3f9da7b9694af3411cd').set('authorization', `Bearer ${tokenGuest}`);
     expect(response.status).toEqual(403);
-})
+});
 
 test("DELETE /delete_movies/:id 401 UNAUTHORIZED (INVALID TOKEN)", async () =>
 {
     const response = await request(app).delete('/movies/66f4e3f9da7b9694af3411cd').set('authorizathion', `Bearer, 231`);
     expect(response.status).toEqual(401);
-})
+});
 
 test("DELETE /delete_movies/:id 401 UNAUTHORIZED (WITHOUT TOKEN)", async () =>
 {
     const response = await request(app).delete('/movies/66f4e3f9da7b9694af3411cd');
     expect(response.status).toEqual(401);
-})
+});
+
+test("DELETE /delete_movies/:id 404 NOT FOUND", async () =>
+{
+    console.log("Minha vez")
+    const response = await request(app).delete('/movies/-1').set('authorization', `Bearer ${tokenAdmin}`);
+    expect(response.status).toEqual(404);
+});
 

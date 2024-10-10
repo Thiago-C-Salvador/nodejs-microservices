@@ -1,1 +1,1 @@
-db.blackList.createIndex({ data: 1 },{ expireAfterSeconds: 30 });
+db.blackList.createIndex({ data: 1 },{ expireAfterSeconds: 1800 });

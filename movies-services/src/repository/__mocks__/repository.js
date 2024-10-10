@@ -59,10 +59,16 @@ async function addMovie(movie)
     return [movies[0]];
 }
 
+async function updateMovie(movie)
+{
+    if(movie == -1) return -1
+    return [movies[0]];
+}
+
 async function deleteMovie(movieId)
 {
-    if(!movieId) throw new Error("Não foi possível excluir esse filme")
+    if(movieId === "-1") return -1;
     return true;
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviePrimieres, addMovie, deleteMovie }
+module.exports = { getAllMovies, getMovieById, getMoviePrimieres, addMovie, deleteMovie, updateMovie }

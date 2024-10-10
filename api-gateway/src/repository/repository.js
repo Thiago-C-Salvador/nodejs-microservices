@@ -24,5 +24,4 @@ async function checkBlackList(token)
     return result > 0;
 }
 
-
 module.exports = { getUser, insertBlackListToken, checkBlackList }
