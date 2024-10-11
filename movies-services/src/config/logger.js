@@ -13,12 +13,13 @@ const log = winston.createLogger({
             level: 'error'
         }),
         new winston.transports.File({
-            level: 'info',
             filename: path.join(__dirname, "..", "./logs", "info.log"),
+            level: 'info'
         })
     ]
 });
 
+//Em caso da aplicação rodar em nível de produção, então não irá apenas salvar os logs em arquivo, não lançará em console também.
 if(process.env.NODE.ENV !== 'production')
 {
     log.add(new winston.transports.Console({ format: winston.format.simple()}))

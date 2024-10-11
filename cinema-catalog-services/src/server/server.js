@@ -10,12 +10,12 @@ async function start(api, repository)
 {
     const app = express();
     app.use(morgan('dev'));
+    app.use(express.json());
 
     //Boa prática ter uma rota GET para um check quanto ao funcionamento do servidor
     app.get('/health', (req, res) => res.send(`The service ${process.env.MS_NAME} is runing at ! ${process.env.PORT}`))
 
-    api(app, repository); //resultado na execução da função: movies(app, repository)
-
+    api(app, repository); //resultado na execução da função é movies(app(express), repository(onde estão os métodos))
 
     //page of error
     app.use((error, req, res, next) =>

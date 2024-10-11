@@ -1,4 +1,1 @@
-back-end application that simulates some services of net of cinemas.
-Still in phase under construction. But feel free to take a look or use what has been covered so far. To make it work, just run "npm install" via terminal, inside the project folder, to install the dependencies. Then run it with "nmp start" / "npm run dev"..
-Note: To model data for the database, use the models found in the "seeds" directories of each microservice.
-This project is built using the mongodb database
+Back-end application that simulates some services of net of cinemas with for example. Still in phase under construction. But feel free to take a look or use what has been covered so far. To make it work, just run "npm install" via terminal, inside the project folder, to install the dependencies. Then run it with "nmp start" / "npm run dev"..

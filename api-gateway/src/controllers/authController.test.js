@@ -4,8 +4,8 @@ const repository = require('../repository/repository');
 const { server } = require('../server/index');
 const { ObjectId } = require('mongodb')
 
-const login = {
-    email: "thiagoncp@gmail.com",
+const login = {//substitua pelos dados que tenha em sua base de daddos
+    email: "thiago@gmail.com",
     password: "123456",
 }
 

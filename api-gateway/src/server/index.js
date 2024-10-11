@@ -11,6 +11,7 @@ app.use(helmet());
 app.use(express.json());
 
 const options ={
+    //mantém a rota original das url após passar pelo gateway
     proxyReqPathResolver: (req) => { return req.originalUrl }
 }
 
@@ -19,14 +20,17 @@ const httpProxy_catalogCinemaS =  httpProxy(process.env.CATALOG_CINEMAS_API, opt
 
 app.post('/login', authControler.validateLogin, authControler.dologin);
 
+//medleware para verificar se o token é ainda é valido. Antes de qualquer acesso de rota, irá passar pela verificação.
 app.use('*', authControler.ValidateBlackList);
 
 app.post('/logout', authControler.validationToken, authControler.dologout);
 
 app.use('/movies', httpProxy_movies);
-// app.use('/cities', httpProxy_catalogCinemaS);
-// app.use('/cinemas', httpProxy_catalogCinemaS);
-app.get(/city|cities|cinemas|movies/, httpProxy_catalogCinemaS);
+
+app.get(/city|cities|cinema|cinemas|movi|movies/, httpProxy_catalogCinemaS);
+app.put(/city|cities|cinema|cinemas/, httpProxy_catalogCinemaS);
+app.patch(/addCinema/, httpProxy_catalogCinemaS);
+app.delete(/city|cities|cinema|cinemas/, httpProxy_catalogCinemaS);
 
 const server = app.listen(process.env.PORT, console.log(`Server started at PORT ${process.env.PORT}`));
 

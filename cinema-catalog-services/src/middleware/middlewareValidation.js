@@ -1,19 +1,7 @@
-const { schema, schemaUpdate } = require('../schema/schemaMovies');
 const jwt = require('jsonwebtoken');
+const { schema } = require('../schema/schemaCinemas');
 
 const ADMIN_PROFILE = 1;
-
-const validationMovie = (req, res, next) => {
-    const { error } = schema.validate(req.body);
-    if(error) return res.status(422).json(error);
-    next();
-}
-
-const  validationUpload = (req, res, next) => {
-    const { error } = schemaUpdate.validate(req.body);
-    if(error) return res.status(422).json({ Message: error.message, Data: error.details[0].type });
-    next();
-}
 
 const validationToken = (req, res, next) => {
     let token = req.headers['authorization'];
@@ -32,11 +20,22 @@ const validationToken = (req, res, next) => {
     }
 }
 
+const validateCityCinema = (req, res, next) => {
+    const { error } = schema.validate(req.body);
+    if(error)
+    {
+        const info = error.message.slice(1, error.message.indexOf('" '));
+        if( info === "state" || info === "country") return res.status(422).json(`This property "${info}" most contain exactly 2 characters.`);
+        return res.status(422).json(error.message);
+    }
+    next();
+}
+
+//ADMIN_PROFILE pode e dever ser configurado em uma variável de ambiente.
 const authorizationUser = (req, res, next) => {
-    console.log(res.locals)
     const { profileId } =  res.locals;
     if(!(profileId == ADMIN_PROFILE)) return res.sendStatus(403);
     next();
 }
 
-module.exports = { validationMovie, validationToken, authorizationUser, validationUpload }
+module.exports = { validationToken, validateCityCinema, authorizationUser }

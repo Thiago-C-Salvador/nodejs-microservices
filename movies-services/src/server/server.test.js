@@ -4,7 +4,6 @@ const db = require('../config/database');
 const request = require('supertest');
 
 let app = null;
-// const apiMock = jest.fn((app, repository) => true)
 
 const apiMock = jest.fn((app, repository) => 
 {

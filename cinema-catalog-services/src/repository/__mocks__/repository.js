@@ -269,8 +269,8 @@ function getAllCities()
 
 function getCinemasByCityId(cityId)
 {
-    if(cityId < 0 ) return []
-    return cinemaCatalog[cinemaCatalog.length - 1].cinemas
+    if(cityId < 0 ) return [];
+    return cinemaCatalog[cinemaCatalog.length - 1].cinemas;
 }
 
 function getMoviesCinemaById(cinemaId)
@@ -281,13 +281,13 @@ function getMoviesCinemaById(cinemaId)
             titulo: cinema.salas[0].sessoes[0].filme,
             _id: cinema.salas[0].sessoes[0].idFilme
         }
-    })
+    });
 }
 
 async function getMoviesInCityById(cityId)
 {
-    if(cityId < 0 ) return []
-    return getMoviesCinemaById()
+    if(cityId < 0 ) return [];
+    return getMoviesCinemaById();
 }
 
 async function getSessionMovieById(cityId, movieId)
@@ -302,14 +302,39 @@ async function getSessionMovieById(cityId, movieId)
             sala: cinema.salas[0].nome,
             sessao: cinema.salas[0].sessoes[0]
         }
-    })
+    });
 }
 
 async function getMoviesByTheater(cityId, cinemaId, movie_thearter)
 {
-    if(cityId < 0 || cinemaId < 0 || movie_thearter < 0 ) return []
-    return getSessionMovieById()
+    if(cityId < 0 || cinemaId < 0 || movie_thearter < 0 ) return [];
+    return getSessionMovieById();
 }
 
-module.exports = { getAllCities, getCinemasByCityId, getMoviesCinemaById, getMoviesInCityById, getSessionMovieById, getMoviesByTheater }
+async function addNewCity(data)
+{
+    if(data) return { status: 201, cidade: cinemaCatalog[cinemaCatalog.length - 1].cidade };
+
+}
+
+async function newCinema(idCity, data)
+{
+    if(idCity && data) return { status: 200, cidade: cinemaCatalog[cinemaCatalog.length - 1].cidade };
+    
+}
+
+async function deleteCity(idCity)
+{
+    if(idCity === "-1") return {status: 404};
+    return { status: 204 };
+}
+
+async function deleteAllCinemasByCityId(idCity)
+{
+    console.log(idCity)
+    if(idCity === "-1") return {status: 204};
+    return { status: 200 };
+}
+
+module.exports = { getAllCities, getCinemasByCityId, getMoviesCinemaById, getMoviesInCityById, getSessionMovieById, getMoviesByTheater, addNewCity, newCinema, deleteCity, deleteAllCinemasByCityId }
 
