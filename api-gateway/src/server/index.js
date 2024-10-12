@@ -2,7 +2,6 @@ const express = require('express');
 const httpProxy = require('express-http-proxy');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const cookieParse = require('cookie-parse');
 const authControler = require('../controllers/authControler');
 
 const app = express();
@@ -32,6 +31,6 @@ app.put(/city|cities|cinema|cinemas/, httpProxy_catalogCinemaS);
 app.patch(/addCinema/, httpProxy_catalogCinemaS);
 app.delete(/city|cities|cinema|cinemas/, httpProxy_catalogCinemaS);
 
-const server = app.listen(process.env.PORT, console.log(`Server started at PORT ${process.env.PORT}`));
+const server = app.listen(process.env.PORT, () => { console.log(`The service ${process.env.MS_NAME} was started at ${process.env.PORT}`)} );
 
 module.exports = { server }

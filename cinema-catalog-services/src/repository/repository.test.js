@@ -1,22 +1,6 @@
 const { ObjectId } = require('mongodb');
 const repository = require('../repository/repository');
 const database = require('../config/database');
-
-// jest.mock('../repository/repository', () => {
-//         const originalModule = jest.requireActual('../repository/repository');
-//         return {
-//                 ...originalModule,
-//                 deleteAllCinemasByCityId: jest.fn(),
-//                 deleteCity: jest.fn()
-//         };
-// });
-
-// Mock apenas para os dois testes a seguir
-// beforeEach(() => {
-//         jest.clearAllMocks(); // Limpa os mocks antes de cada teste
-// });
-        
-
 let cityId = null;
 let cinemaId = null;
 let movieId = null;
@@ -994,64 +978,33 @@ test('addNewCity TRHOW ERROR', async () => {
 test('deleteCity CITY NO EXIST', async () =>
 {
         const idCity = new ObjectId();
-        // repository.deleteCity.mockResolvedValue({ status: 404 });
         const response = await repository.deleteCity(idCity);
         expect(response.status).toEqual(404);
-        // expect(response).toHaveProperty('status', 404);
-        // expect(repository.deleteCity).toHaveBeenCalledWith(idCity); 
-
 });
 
 test('deleteCity OK', async () =>
 {
         const city = await repository.getAllCities();
-        // repository.deleteCity.mockResolvedValue({ status: 204 });
         const idCity = city[city.length-1]._id;
         const response = await repository.deleteCity(idCity);
         expect(response.status).toEqual(204);
-        // expect(response).toHaveProperty('status', 204);
-        // expect(repository.deleteCity).toHaveBeenCalledWith(idCity); 
 });
 
 test('deleteAllCinemasByCityId OK', async () =>{
-
-        // repository.deleteAllCinemasByCityId.mockResolvedValue({ status: 200 });
         const response = await repository.deleteAllCinemasByCityId(firstCity);
         expect(response.status).toEqual(200);
-        // expect(repository.deleteAllCinemasByCityId).toHaveBeenCalledWith(firstCity); 
 });
 
 test('deleteAllCinemasByCityId NO EXIST CITY', async () =>{
 
         idCity = new ObjectId();
-        // repository.deleteAllCinemasByCityId.mockResolvedValue({ status: 404 })
         const response = await repository.deleteAllCinemasByCityId(idCity);
         expect(response.status).toEqual(404);
-        // expect(repository.deleteAllCinemasByCityId).toHaveBeenCalledWith(idCity)
 });
 
 test('deleteAllCinemasByCityId NO CINEMAS WERE DELETED', async () =>{
 
-        // repository.deleteAllCinemasByCityId.mockResolvedValue({ status: 204 })
         const response = await repository.deleteAllCinemasByCityId(firstCity);
         expect(response.status).toEqual(204);
-        // expect(repository.deleteAllCinemasByCityId).toHaveBeenCalledWith(firstCity)
 });
 
-
-// test('deleteAllCinemasByCityId THROW ERROR', async () =>{
-//         const mockDelete = jest.spyOn(repository, 'deleteAllCinemasByCityId');
-//         mockDelete.mockRejectedValue(new Error('Erro de conexão'));
-
-//         const teste = new ObjectId();
-//         await expect(repository.deleteAllCinemasByCityId(teste)).rejects.toThrow('Erro de conexão');
-
-//         mockDelete.mockRestore(); // Restaura a implementação original
-// });
-
-// test('deleteCity TRHOW ERROR', async () => {
-//         const teste = new ObjectId();
-//         // Simulando um erro de banco de dados
-//         repository.deleteAllCinemasByCityId.mockRejectedValue(new Error('Erro de conexão'));
-//         await expect(repository.deleteAllCinemasByCityId(teste)).rejects.toThrow('Erro de conexão');
-// });

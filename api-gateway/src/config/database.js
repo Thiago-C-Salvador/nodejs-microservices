@@ -4,7 +4,7 @@ let client = null;
 
 async function connect()
 {
-    //Caso exista uma instaância do banco rodando, então não iniciará outra.
+    //Caso exista uma conexão do banco em mémória, então será reaproveitada.
     if(!client) client = new MongoClient(process.env.MONGO_CONNECTION);
     await client.connect();
     const db = client.db(process.env.DATABASE);

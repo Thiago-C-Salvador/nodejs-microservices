@@ -35,10 +35,6 @@ module.exports = (app, repository) =>
     {
         const cinemas = await repository.getCinemasByCityId(req.params.id)
         if(!cinemas || !cinemas.length) return res.sendStatus(404);
-        // let allCinemas = [];
-        // cinemas.forEach((element) => {
-        //     if(element.nome) allCinemas.push(element.nome) 
-        // });
         res.json(cinemas);
     });
 

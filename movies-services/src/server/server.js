@@ -12,7 +12,7 @@ async function start(api, repository)
     app.use(morgan('dev'));
     app.use(express.json());
 
-    //Boa prática ter uma rota GET para um check quanto ao funcionamento do servidor
+    //Rota GET para um check quanto ao funcionamento do servidor
     app.get('/health', (req, res) => res.send(`The service ${process.env.MS_NAME} is runing at ! ${process.env.PORT}`))
 
     api(app, repository); //movies(app, repository)

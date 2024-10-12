@@ -18,7 +18,6 @@ jest.mock('../node_modules/jsonwebtoken', () =>{
     }
 } )
 
-// const app = (async () => { await server.start(movies, repositoryMock )})();
 let app = null;
 beforeAll(async() =>{
    app =  await server.start(movies, repositoryMock);

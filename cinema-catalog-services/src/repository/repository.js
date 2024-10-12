@@ -110,7 +110,7 @@ async function addNewCity(dataCinema)
             return { status: 201, message: 'Cinema criado com sucesso.', data: dataCinema }; // 201 CREATE
         }
 
-        //aqui deve retornar uma mensagem para o usuário informando que a cidade já existe, mas se o mesmo pretender continuar com o cadastro (na verdade atualização), só ocorrerá caso alguns do cinema(as) informado(dos) não exista na cidade informada.
+        //Ocorrerá chamada abaixo caso alguns do cinema(as) informado(dos) não exista na cidade informada.
         //Logo a sequência deveria ser uma outra função que será avocada a depender do evento do click/ação do usuário, ou seja uma rota "/cinema" com o verbo PATCH.
         const idCity = (allCities[index]._id);
         return await newCinema(idCity, dataCinema)
