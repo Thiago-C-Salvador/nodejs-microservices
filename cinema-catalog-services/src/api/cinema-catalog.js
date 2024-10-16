@@ -64,7 +64,7 @@ module.exports = (app, repository) =>
         return res.status(response.status).json(response)
     }); 
 
-    app.patch('/addCinema/:id', validateCityCinema, validationToken, authorizationUser, async (req, res, next) => {
+    app.patch('/add_cinema/:id', validateCityCinema, validationToken, authorizationUser, async (req, res, next) => {
         for( let i = 0; i <= req.body.cinemas.length-1; i++)
         {
             if(!req.body.cinemas[i].id){

@@ -1,24 +1,37 @@
-Aplicação back-end que simula alguns serviços de redes de cinemas com por exemplo:
 
-* verificar quais cinemas há em uma determinada cidade;
-* quais filmes estão em cartaz, horário das sessões dos mesmoe e onde estão passando - quais cinemas e respectiva salas;
-* quais filmes são filmes de estreia;
-* preço do ingresso;
-* cadastrar e atualizar e/ou remover cidade, cinema, sala, sessao e filme;
 
-Conhecimentos utilizados neste projeto:
-* api e api-gateway;
-* banco de dados mongoDB (CRUD, blackList e ttl de tokens, além de controle de nível de usuário);
-* registro de logs com uso da biblioteca "Winston";
-* verificação de dados obrigatórios e seus respectivos formatos e regras com uso da biblioteca "joi";
-* criação e verificação de token com biblioteca "JWT";
-* nível de acesso com método de autorização a determinadas rotas;
-* realização de testes de todos as funções/métodos usando a biblioteca "jest";
+Projeto de Simulação de Serviços de Redes de Cinemas
 
-Sinta-se à vontade para dar uma olhada ou usar o que foi abordado no projeto.
-Para fazer funcionar, basta executar "npm install" via terminal, dentro do repositório do projeto, para instalar as dependências. Em seguida, execute-o com "nmp start" / "npm run dev".
+Esta é uma aplicação back-end que simula diversos serviços relacionados a redes de cinemas, oferecendo funcionalidades como:
 
-Caso queira usar o banco já configurado com dados inseridos, então extraia os arquivos de "data.zip" onde se encontra a pasta "data" de cada serviço: cinema-catalog-services, api-gateway e movies-services. Lembrando que ao copiar para dentro de cada respectiva pasta, será necessário renomear as pastas deixando apenas com o nome "data". Por exemplo: "data movies-services" => "data".
+Verificar quais cinemas existem em uma determinada cidade.
+Consultar quais filmes estão em cartaz, incluindo os horários das sessões e quais cinemas e salas estão exibindo cada filme.
+Identificar quais filmes são estreias.
+Consultar o preço dos ingressos.
+Cadastrar, atualizar e/ou remover cidades, cinemas, salas, sessões e filmes.
+Conhecimentos Utilizados Neste Projeto
+Desenvolvimento de APIs e API Gateway.
+Banco de dados MongoDB: Implementação de operações CRUD, blacklist e TTL de tokens, além de controle de níveis de usuário.
+Registro de logs: Utilização da biblioteca Winston.
+Validação de dados: Verificação de dados obrigatórios e seus respectivos formatos e regras com a biblioteca Joi.
+Criação e validação de tokens: Uso da biblioteca jsonwebtoken.
+Controle de acesso: Implementação de método de autorização para determinadas rotas.
+Testes automatizados: Realização de testes para todas as funções/métodos usando a biblioteca Jest.
 
-Supracitado as informações do parágrafo anterior, é preciso lembrar de startar cada insância dos bancos, no meu caso criei uma instância de banco para cada microserviço - um na porta 27017, outro na porta 27018 e outra na porta 27019. Mas se preferir pode criar apenas um banco de dados para conter os microserviços. Então, é só criar o arquivo '.env" e passar os valores desejados para as variáveis de ambiente - use o arquivo ".env.example" para saber quais são as variáveis necessárias.
+Como Usar:
+
+Sinta-se à vontade para explorar ou utilizar o que foi abordado neste projeto. Para executar a aplicação, siga os passos abaixo:
+
+Instalação das Dependências: Execute o comando a seguir no terminal, dentro do repositório do projeto: npm install.
+Em seguida, inicie a aplicação com: "npm start" ou, para o ambiente de desenvolvimento, "npm run dev".
+
+Configuração do Banco de Dados:
+
+Se você deseja utilizar um banco já configurado com dados inseridos, extraia os arquivos do "data.zip", que contém a pasta "data" para cada um dos serviços: cinema-catalog-services, api-gateway e movies-services. Lembre-se de renomear as pastas para que fiquem apenas como "data". Por exemplo, renomeie "data movies-services" para "data".
+
+Caso prefira criar seus próprios bancos de dados, utilize os dados de modelo disponíveis no repositório "seeds" de cada microserviço.
+
+Instâncias de Banco de Dados:
+
+É importante lembrar que cada microserviço deve ter sua própria instância de banco de dados. No meu caso, configurei uma instância para cada microserviço, utilizando as portas 27017, 27018 e 27019. No entanto, você pode optar por criar um único banco de dados para todos os microserviços. Para isso, crie um arquivo .env e defina os valores desejados para as variáveis de ambiente. Consulte o arquivo .env.example para saber quais variáveis são necessárias.
 

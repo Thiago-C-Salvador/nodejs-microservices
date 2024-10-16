@@ -15,7 +15,7 @@ const  validationUpload = (req, res, next) => {
     next();
 }
 
-const validationToken = (req, res, next) => {
+const validationToken = (req, res, next) => {   
     let token = req.headers['authorization'];
     if(!token) return res.sendStatus(401);
 

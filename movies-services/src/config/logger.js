@@ -25,4 +25,4 @@ if(process.env.NODE.ENV !== 'production')
     log.add(new winston.transports.Console({ format: winston.format.simple()}))
 }
 
-module.exports = log;
+module.exports = { log };

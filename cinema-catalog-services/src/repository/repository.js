@@ -111,7 +111,7 @@ async function addNewCity(dataCinema)
         }
 
         //Ocorrerá chamada abaixo caso alguns do cinema(as) informado(dos) não exista na cidade informada.
-        //Logo a sequência deveria ser uma outra função que será avocada a depender do evento do click/ação do usuário, ou seja uma rota "/cinema" com o verbo PATCH.
+        //Logo a sequência deveria ser uma outra função que será avocada a depender do evento/ação por parte do usuário, ou seja uma rota "/cinema" com o verbo PATCH.
         const idCity = (allCities[index]._id);
         return await newCinema(idCity, dataCinema)
     }
@@ -140,6 +140,8 @@ async function newCinema(id_city, dataCinema) {
             const response = await db.collection('catalogCinema').updateOne({ _id: idCity }, { $set: { cinemas: city.cinemas } });
             return { status: 200, modifiedCount: response.modifiedCount, updatedCity: city };
         }
+        else 
+            return { status: 200, message: 'Tentativa de inserção de dados identicos. Nenhum dado foi atulizado.' };
     }
     return { status: 200, message: 'A cidade informada não existe na base de dados.' };   
 }

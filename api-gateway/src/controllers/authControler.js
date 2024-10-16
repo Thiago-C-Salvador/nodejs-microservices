@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
 const repository = require('../repository/repository');
 
-//Espera reeber o e-mail do usuário e o password
+//Espera receber o e-mail (username) e o password. Caso esteja tudo Ok no login, então ocorre a assinatura de um token para tal usuário.
 const dologin = async (req, res, next) => {
-    const { email, password } = req.body
+    const { email, password } = req.body;
     try{
         const user = await repository.getUser(email, password);
         const token = jwt.sign({userId: user._id, profileId: user.profileId}, process.env.SECRET, {expiresIn: parseInt(process.env.EXPIRES)});
         return res.json({token});
     }
     catch(error){
-        console.error(error)
+        console.error(error);
         return res.sendStatus(400);
     }
 }
@@ -35,7 +35,7 @@ async function ValidateBlackList(req, res, next)
     else next();
 }
 
-//Cria o otken e o injeta em res.locals.userId para mais tarde ser possível consultar o token e sua validade.
+//Meddleware para verificar a se há ou não o token junto ao cabeçalho e se o mesmo é um token integro/válido.
 const validationToken = (req, res, next) => {
     let token = req.headers['authorization'];
     token = token.replace('Bearer ', '');
@@ -49,7 +49,7 @@ const validationToken = (req, res, next) => {
     }
 }
 
-//Realiza a inserção do token na blackList e concluí o logout.
+//Realiza a inserção do token na blackList ao concluir o logout.
 const dologout = async (req, res, next) => {
     let token = req.headers['authorization'];
     token = token.replace('Bearer ', '');

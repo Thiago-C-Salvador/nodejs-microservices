@@ -19,8 +19,8 @@ beforeAll( async () => {
     await repository.insertBlackListToken(tokenBlackList);
 })
 
-afterAll( async () => {
-    await app.close();
+afterAll(  () => {
+    app.close();
 })
 
 test('POST login 200 OK', async () =>{

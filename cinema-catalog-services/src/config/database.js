@@ -17,7 +17,9 @@ async function disconnect()
     if(!client) return true
     {
         await client.close();
-        return client = false;
+        client = null;
+        console.log('Database connection closed.');
+        return
     }
 
 }
